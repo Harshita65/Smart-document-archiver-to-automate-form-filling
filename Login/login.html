@@ -1,0 +1,35 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="login.css">
+    </head>
+    <body class="rail-bg5">
+        <div>    
+            <h3 id="head1">Welcome to Form Recogniser</h3>
+            <h5 id="head2">Login to continue</h5>
+            <div id ="login_glass"><h1 id="Login_heading">Login</h1>
+               <form><label id="login_email">Email:</label>
+               <input type="text"/><br>
+               <label id="login_pass">Password:</label>
+               <input type="password" />
+               <input id="login_showPass" type="checkbox" onclick="myFunction()">Show Password
+               <button id="check_PNR" onclick="Login()">Submit</button>
+               </form>
+            </div>
+        </div>  
+
+        <script>
+            function Login(){
+                    alert("Logged In Successfully");
+            }
+            function myFunction(){
+                var x = document.getElementById("login_pass");
+                if(x.type === "password"){
+                    x.type = "text";
+                }
+                else{
+                    x.type = "password";
+                }
+            }
+        </script>
+    </body>
+</html>
