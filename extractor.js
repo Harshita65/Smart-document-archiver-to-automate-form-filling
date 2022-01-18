@@ -11,8 +11,6 @@ var myWidget = cloudinary.createUploadWidget({
 document.getElementById("upload_widget").addEventListener("click", function(){
     myWidget.open();
   }, false);
-
-
   
 
 const userAction = async (file_to_do) => {
