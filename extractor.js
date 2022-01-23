@@ -53,14 +53,36 @@ const userAction = async (file_to_do) => {
       setTimeout(getData(location),10000);
     }
     else if(myjson["status"] == "succeeded"){
-    console.log(extract(myjson["analyzeResult"]["readResults"][0]["lines"]));
+      let id = Math.random().toString(36).slice(5);
+      let database_url = "https://prod-09.northcentralus.logic.azure.com:443/workflows/51eba0f8bb8c4806ba21679925302fa7/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Vdrb2sAmI7fKrJBZ5iMfSY98OqSy1RqfKhbYY5InMXg";
+      let data = extract(myjson["analyzeResult"]["readResults"][0]["lines"]);
+      console.log(data)
+    fetch(database_url,{
+      method: "PUT",
+      body: JSON.stringify({
+        "id" : id,
+        "data":data
+        }),
+      headers:{
+        "Content-Type": "application/json"
+      }
+    }).then(result=>{return result.json()}).then(result=>{
+      if(result['status']){
+        console.log("Database Updated!");
+        t1 = window.setTimeout(function(){ window.location = "/extracted_data.html"; },3000);
+      }
+      else{
+        console.log("Something went wrong!");
+      }
+    })
     }
     else{
       console.log("Extraction Unsuccessful");
 
     }
   }).catch(err=>{
-    console.log("Extraction unsuccessful");
+    console.log(err);
   });
 }
 const extract = (arr) => arr.reduce((acc, obj) => acc.concat(obj.text, extract(obj.items || [])), [])
+
